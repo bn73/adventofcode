@@ -41,7 +41,7 @@ class Day1Test {
 
         @Test
         void calculate_the_given_assignment() throws IOException {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("assignment.csv")))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("day1_assignment.csv")))) {
                 //System.out.println(new Sweeps(reader).countIncreasingDepths());
                 assertThat(new Sweeps(reader).countIncreasingDepths1()).isEqualTo(1715);
             }
@@ -84,7 +84,7 @@ class Day1Test {
 
         @Test
         void calculate_the_given_assignment() throws IOException {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("assignment.csv")))) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("day1_assignment.csv")))) {
                 //System.out.println(new Sweeps(reader).countIncreasingDepths2(3));
                 assertThat(new Sweeps(reader).countIncreasingDepths2(3)).isEqualTo(1739);
             }
