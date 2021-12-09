@@ -13,7 +13,6 @@ class Day8Test {
         void can_calculate_example() {
             Day8 day8 = new Day8(Utilities.linesFromResource("day8_example"));
 
-            day8.computeSumOfOutputs();
             assertThat(day8.countOfDigitsWithUniqueSegments()).isEqualTo(26);
         }
 
@@ -32,7 +31,6 @@ class Day8Test {
         void can_calculate_example() {
             Day8 day8 = new Day8(Utilities.linesFromResource("day8_example"));
 
-            day8.computeSumOfOutputs();
             assertThat(day8.computeSumOfOutputs()).isEqualTo(61229);
         }
 
