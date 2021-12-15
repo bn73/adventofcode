@@ -1,4 +1,4 @@
-package bn73.adventofcode;
+package bn73.adventofcode.day9;
 
 import java.util.*;
 import java.util.stream.Collectors;

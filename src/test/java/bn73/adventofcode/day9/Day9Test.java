@@ -1,6 +1,5 @@
 package bn73.adventofcode.day9;
 
-import bn73.adventofcode.Day9;
 import bn73.adventofcode.Utilities;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
