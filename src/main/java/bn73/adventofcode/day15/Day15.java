@@ -5,8 +5,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static java.util.Comparator.comparingLong;
-
 public class Day15 {
     private Node[][] grid;
     private int gridWidth, gridHeight;
@@ -56,12 +54,10 @@ public class Day15 {
 
     public long lowestRisk() {
         grid[0][0].leastKnownTotalRisk = 0;
-        Set<Node> unvisitedNodes = getUnvisitedNodes();
-        List<Node> unvisitedNodesSorted = new ArrayList<>(unvisitedNodes);
-        Collections.sort(unvisitedNodesSorted, comparingLong(Node::getLeastKnownTotalRisk));
+        SortedSet<Node> unvisitedNodes = getUnvisitedNodes();
 
         while (!unvisitedNodes.isEmpty()) {
-            Node currentNode = unvisitedNodes.stream().sorted(comparingLong(Node::getLeastKnownTotalRisk)).findFirst().get();
+            Node currentNode = unvisitedNodes.first();
             unvisitedNodes.remove(currentNode);
             currentNode.getNeighbours()
                     .stream()
@@ -69,15 +65,18 @@ public class Day15 {
                     .forEach(neighbour -> {
                         long alt = currentNode.getLeastKnownTotalRisk() + neighbour.getRiskLevel();
                         if (alt < (neighbour).getLeastKnownTotalRisk()) {
+                            // in order to keep unvisitedNodes sorted, remove it, and reinsert it with updated totalRisk
+                            unvisitedNodes.remove(neighbour);
                             neighbour.setLeastKnownTotalRisk(alt);
+                            unvisitedNodes.add(neighbour);
                         }
                     });
         }
         return grid[gridHeight - 1][gridWidth - 1].getLeastKnownTotalRisk();
     }
 
-    private Set<Node> getUnvisitedNodes() {
-        Set<Node> unvisitedNodes = new HashSet<>();
+    private SortedSet<Node> getUnvisitedNodes() {
+        SortedSet<Node> unvisitedNodes = new TreeSet<>();
         for (int y = 0; y < gridHeight; y++) {
             for (int x = 0; x < gridWidth; x++) {
                 unvisitedNodes.add(grid[y][x]);
@@ -86,7 +85,7 @@ public class Day15 {
         return unvisitedNodes;
     }
 
-    class Node {
+    class Node implements Comparable<Node> {
         final int x, y;
         final long riskLevel;
         long leastKnownTotalRisk = Long.MAX_VALUE;
@@ -154,6 +153,19 @@ public class Day15 {
             }
             if (validCoordinate(y, x - 1)) {
                 neighbours.add(grid[y][x - 1]);
+            }
+        }
+
+        @Override
+        public int compareTo(Node that) {
+            if (this.leastKnownTotalRisk == that.leastKnownTotalRisk) {
+                if (this.x == that.x) {
+                    return Integer.compare(this.y, that.y);
+                } else {
+                    return Integer.compare(this.x, that.x);
+                }
+            } else {
+                return Long.compare(this.leastKnownTotalRisk, that.leastKnownTotalRisk);
             }
         }
     }
